@@ -1,0 +1,103 @@
+<div class="question-card" style="margin-top: 30px;" *ngIf="question">
+    <h2>{{ question.title }}</h2>
+    <p>Asked On: <b>{{ question.date | date: 'EEEE, MMMM d, y' }}</b> by <b>{{  question.username }}</b></p>
+    <div class="vote-section">
+        <div class="arrow-icon" (click)="addVote('UPVOTE', question.voted)" [ngStyle]="{'color': question.voted == '1' ? 'rgb(11,211,81)' : 'default'}">
+            <i class="material-icons">keyboard_arrow_up</i>
+        </div>
+        <div class="vote-count">{{question.voteCount}}</div>
+        <div class="arrow-icon" (click)="addVote('DOWNVOTE', question.voted)" [ngStyle]="{'color': question.voted == '-1' ? 'rgb(11,211,81)' : 'default'}">
+            <i class="material-icons">keyboard_arrow_down</i>
+        </div>    
+    <div class="question-body">
+        <p>Body: {{ question.body }}</p>
+        <div class="tag-list">
+            <mat-chip-listbox>
+                <mat-chip *ngFor="let tag of question.tags" color="primary">{{ tag }}</mat-chip>
+            </mat-chip-listbox>
+        </div>
+    </div>
+</div>
+
+
+<div *ngFor="let answer of answers; let i = index;" class="answer-card" style="margin-top: 30px;">
+    <h2>Answers</h2>
+    <div>
+        <div class="vote-section">
+            <div class="approved-icon" *ngIf="answer.approved">
+                <mat-icon>check_circle</mat-icon>
+            </div>
+            <div class="arrow-icon" [ngStyle]="{'color': answer.voted == '1' ? 'rgb(11, 211, 81)' : 'default'}">
+                <mat-icon (click)="addVoteToAnswer('UPVOTE', answer.id, answer.voted)">keyboard_arrow_up</mat-icon>
+            </div>
+            <div class="vote-count">
+                <h1>{{answer.voteCount}}</h1>
+            </div>
+            <div class="arrow-icon" [ngStyle]="{'color': answer.voted == '-1' ? 'rgb(11, 211, 81)' : 'default'}">
+                <mat-icon (click)="addVoteToAnswer('DOWNVOTE', answer.id, answer.voted)">keyboard_arrow_down</mat-icon>
+            </div>
+        </div>
+       
+        <div>
+            <h5>Answerd by: <b>{{ answer.username }}</b> -Answered on: <b>{{ answer.createdDate | date:'MMM d, y, h:mm a' }}</b></h5>
+            <p>{{ answer.body }}</p>
+            <div *ngIf="answer.convertedImg">
+                <img [src]="answer.convertedImg" />
+            </div>
+
+            <div class="comment-section" *ngFor="let comment of answer.commentDTOList">
+                <hr>
+                <p>{{ comment.body }}
+                    <span class="comment-details">
+                        <mat-divider vertical></mat-divider> {{ comment.username }} - {{ comment.createdDate | date: 'MMM d,y'}}
+                    </span>
+                </p>
+                <hr>
+            </div>
+
+
+            <div class="add-comment-section">
+                <mat-form-field appearance="fill">
+                    <mat-label>Comment</mat-label>
+                    <input matInput #comment placeholder="Add Comment..." nzBorderless />
+                </mat-form-field>
+                <div>
+                    <button class="button" mat-raised-button color="primary" (click)="postComment(answer.id, comment.value)">Add Comment</button>
+                </div>
+            </div>
+
+            <span *ngIf="!question.hasApprovedAnswer">
+                <hr>
+                <div>
+                    <button mat-raised-button color="primary" (click)="approveAnswer(answer.id)" *ngIf="displayButton">Approve Answer</button>
+                </div>
+            </span>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="answer-section" style="margin-top: 30px;">
+    <div>
+        <div>
+            <h2>Post Answer</h2>
+        </div>
+        <form [formGroup]="validateForm" (ngSubmit)="addAnswer()">
+            <div class="form-field">
+                <mat-form-field appearance="fill">
+                    <mat-label>Subject</mat-label>
+                    <textarea matInput rows="2" placeholder="Solution ..." formControlName="body"></textarea>
+                </mat-form-field>
+            </div>
+
+            <div class="form-field">
+                <div class="image-preview" *ngIf="selectedFile">
+                    <img [src]="imagePreview" height="50" alt="Image Preview">
+                </div>
+                <input id="file" type="file" accept="image/png, image/jpeg, image/jpg" (change)="onFileSelected($event)">
+            </div>
+            <button mat-raised-button color="accent">Post Your Answer</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="search-container">
+        <form [formGroup]="titleForm">
+            <mat-form-field class="search-field">
+                <input matInput placeholder="Search by title" formControlName="title">
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="searchQuestionByTitle()">Search</button>
+        </form>
+    </div>
+    <ng-container *ngIf="questions.length ===  0 ; else questionList">
+        <mat-card class="empty-message">
+            <mat-card-content>
+                <mat-icon>sentiment_dissatisfied</mat-icon>
+                <p>No questions found.</p>
+            </mat-card-content>
+        </mat-card>
+    </ng-container>
+
+    <ng-template #questionList>
+        <div class="child" *ngFor="let question of questions">
+            <h2 class="question-title">
+                {{ question.title }}
+            </h2>
+            <div class="question-content">
+                <p>{{ question.body }}</p>
+                <div class="tags-container">
+                    <mat-chip-listbox>
+                        <mat-chip *ngFor="let tag of question.tags" color="primary">{{ tag }}</mat-chip>
+                    </mat-chip-listbox>
+                </div>
+                <hr>
+                <h5>
+                    Votes: <b>{{ question.voteCount }}</b> - 
+                    Posted By: <b>{{ question.username }}</b> - 
+                    Posted On: <b>{{ question.date | date: 'EEEE, MMMM d, y' }}</b>
+                </h5>
+            </div>
+        </div>
+    </ng-template>
+
+    <div class="pagination">
+        <mat-paginator [length]="total" [pageSize]="5" (page)="pageIndexChange($event)"></mat-paginator>
+    </div>
+</div>
