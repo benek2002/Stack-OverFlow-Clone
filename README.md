@@ -4,9 +4,9 @@ This is an application in which the backend is written in Java and the frontend 
 
 **The functionalities of this application:**
 
--login
-*registration
-+adding questions
+- login
+* registration
++ adding questions
 -adding answers to questions
 *adding comments to answers
 +displaying your questions
