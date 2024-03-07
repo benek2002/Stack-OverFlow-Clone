@@ -4,6 +4,8 @@ This is an application in which the backend is written in Java and the frontend 
 
 **Screenshots**
 
+<img width="827" alt="Screenshot 2024-03-07 165128" src="https://github.com/benek2002/Stack-OverFlow-Clone/assets/125872251/9c6ccaa5-2812-4e56-a46b-e1e4ef07e6aa">
+
 
 **The functionalities of this application:**
 
