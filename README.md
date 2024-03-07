@@ -4,17 +4,17 @@ This is an application in which the backend is written in Java and the frontend 
 
 **The functionalities of this application:**
 
-*login
+-login
 *registration
-*adding questions
-*adding answers to questions
++adding questions
+-adding answers to questions
 *adding comments to answers
-*displaying your questions
-*displaying questions from all users
++displaying your questions
+-displaying questions from all users
 *sorting questions
-*searching questions by word
-*adding vote to answer
-*confirming answers
++searching questions by word
+-adding vote to answer
++confirming answers
 
 **Tools which i used to build this app:**
 
